@@ -27,7 +27,7 @@ public class SecurityConfig {
     @Autowired
     JWTFilter jwtFilter;
 
-    @Bean
+//    @Bean
     public AuthenticationProvider getAuthProvider(){
 
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
