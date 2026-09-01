@@ -1,0 +1,45 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: notes-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: notes_db
+      MYSQL_USER: notesuser
+      MYSQL_PASSWORD: Notes@123
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  authentication-service:
+    build: ./authentication-service
+    container_name: auth-service
+    environment:
+      DB_URL: jdbc:mysql://mysql:3306/notes_db
+      DB_USERNAME: notesuser
+      DB_PASSWORD: Notes@123
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  note-service:
+    build: ./note-service
+    container_name: note-service
+    environment:
+      DB_URL: jdbc:mysql://mysql:3306/notes_db
+      DB_USERNAME: notesuser
+      DB_PASSWORD: Notes@123
+    depends_on:
+      mysql:
+        condition: service_healthy
+  gateway-service:
+    build: ./gateway
+    container_name: gateway-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - authentication-service
+      - note-service
+      
