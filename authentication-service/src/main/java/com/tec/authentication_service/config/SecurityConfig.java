@@ -27,7 +27,7 @@ public class SecurityConfig {
     @Autowired
     JWTFilter jwtFilter;
 
-//    @Bean
+    @Bean
     public AuthenticationProvider getAuthProvider(){
 
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
@@ -45,7 +45,7 @@ public class SecurityConfig {
         http.csrf(customizer -> customizer.disable());
 
         http.authorizeHttpRequests(request->request
-                .requestMatchers("/login","/register","/refresh").permitAll()
+                .requestMatchers("/auth/login","/auth/register","/auth/refresh").permitAll()
                 .anyRequest()
                 .authenticated());
 

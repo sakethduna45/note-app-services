@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/notes")
+@RequestMapping("/note")
 public class NoteController {
 
     @Autowired
@@ -30,7 +30,7 @@ public class NoteController {
         return noteService.getUserNotes(username);
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public Note createNote(@RequestBody Note note, HttpServletRequest request) {
         String username = getUsernameFromRequest(request);
         return noteService.createNote(note, username);

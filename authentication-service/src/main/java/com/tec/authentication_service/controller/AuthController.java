@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/auth")
 
 public class AuthController {
 
@@ -88,15 +89,19 @@ public class AuthController {
         System.out.println("Username received from request ::::: " + userName);
         System.out.println("Password received from request ::::: "+ password);
 
-        Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(authObject.getUsername(),authObject.getPassword()));
+        try {
+            Authentication authentication = authenticationManager
+                    .authenticate(new UsernamePasswordAuthenticationToken(authObject.getUsername(), authObject.getPassword()));
+            System.out.println("In Authentication "+authObject.getUsername()+ " "+authObject.getPassword());
+            System.out.println("In Authentication ::: is authenticated:::"+ authentication.isAuthenticated() );
 
-        System.out.println("In Authentication "+authObject.getUsername()+ " "+authObject.getPassword());
-        System.out.println("In Authentication ::: is authenticated:::"+ authentication.isAuthenticated() );
+            if(authentication.isAuthenticated()){
+                token = jwtTokenService.generateToken(userName);
+                refreshToken = jwtTokenService.generateRefreshToken(userName);
+            }
 
-        if(authentication.isAuthenticated()){
-            token = jwtTokenService.generateToken(userName);
-            refreshToken = jwtTokenService.generateRefreshToken(userName);
+        } catch (Exception e) {
+            System.out.println(e.toString());
         }
 
         ResponseObject rs = new ResponseObject(token,refreshToken,"request received success");

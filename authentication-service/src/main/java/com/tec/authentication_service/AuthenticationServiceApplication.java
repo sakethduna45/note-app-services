@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class AuthenticationServiceApplication {
 
 	public static void main(String[] args) {
+        System.out.println("DB_URL = " + System.getenv("DB_URL"));
 		SpringApplication.run(AuthenticationServiceApplication.class, args);
 	}
 
