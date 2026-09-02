@@ -21,7 +21,7 @@ pipeline {
             steps {
                 sh 'cp $WORKSPACE/authentication-service/target/*.jar /home/ubuntu/note-app-services/authentication-service/target/'
                 sh 'cp $WORKSPACE/note-service/target/*.jar /home/ubuntu/note-app-services/note-service/target/'
-                sh 'cp $WORKSPACE/api-gateway/target/*.jar /home/ubuntu/note-app-services/gateway/target/'
+                sh 'cp $WORKSPACE/gateway/target/*.jar /home/ubuntu/note-app-services/gateway/target/'
             }
         }
 
