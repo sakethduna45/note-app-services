@@ -17,8 +17,17 @@ pipeline {
             }
         }
 
+        stage('Copy JARs') {
+            steps {
+                sh 'cp authentication-service/target/*.jar /home/ubuntu/note-app-services/authentication-service/target/'
+                sh 'cp note-service/target/*.jar /home/ubuntu/note-app-services/note-service/target/'
+                sh 'cp api-gateway/target/*.jar /home/ubuntu/note-app-services/api-gateway/target/'
+            }
+        }
+
         stage('Deploy') {
             steps {
+                sh 'cp /var/lib/jenkins/workspace/Notes-App-Pipeline/authentication-service/target/*.jar '
                 sh 'docker compose up -d'
             }
         }
