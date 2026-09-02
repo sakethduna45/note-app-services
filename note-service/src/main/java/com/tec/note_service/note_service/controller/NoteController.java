@@ -21,7 +21,7 @@ public class NoteController {
     private String getUsernameFromRequest(HttpServletRequest request) {
         String authHeader = request.getHeader("Authorization");
         String token = authHeader.substring(7);
-        return "jwtTokenService.extractUserName(token)";
+        return "jwtTokenService.extractUserNameFromApiCallToAuthService(token)";
     }
 
     @GetMapping
