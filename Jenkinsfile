@@ -27,8 +27,8 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh 'cp /var/lib/jenkins/workspace/Notes-App-Pipeline/authentication-service/target/*.jar '
-                sh 'docker compose up -d'
+                        sh 'cd /home/ubuntu/note-app-services && docker compose build'
+                        sh 'cd /home/ubuntu/note-app-services && docker compose up -d'
             }
         }
 
